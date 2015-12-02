@@ -1,5 +1,5 @@
 package trab;
 
-public class Grafo {
+public class SalvarXML {
     
 }

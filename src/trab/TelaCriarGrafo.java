@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trab;
 
 import com.thoughtworks.xstream.XStream;
@@ -42,6 +37,7 @@ public class TelaCriarGrafo extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtSalvarXml = new javax.swing.JButton();
+        btnCarregaXml = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,26 +75,28 @@ public class TelaCriarGrafo extends javax.swing.JFrame {
             }
         });
 
+        btnCarregaXml.setText("Carregar Xml");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelNumeroDeVertices)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtVertices, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(txtCriarVertices))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(txtSalvarXml)))
-                .addContainerGap(205, Short.MAX_VALUE))
+                        .addComponent(btnCarregaXml)
+                        .addGap(243, 243, 243)
+                        .addComponent(txtSalvarXml))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabelNumeroDeVertices)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtVertices, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(43, 43, 43)
+                            .addComponent(txtCriarVertices))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,9 +108,11 @@ public class TelaCriarGrafo extends javax.swing.JFrame {
                     .addComponent(txtCriarVertices))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(txtSalvarXml)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSalvarXml)
+                    .addComponent(btnCarregaXml))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,6 +182,22 @@ public class TelaCriarGrafo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCriarVerticesActionPerformed
 
     private void txtSalvarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalvarXmlActionPerformed
+       
+        Grafo g = new Grafo();
+        
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            g.getVertices().add(new Vertice("vertice"+i));
+        }
+       
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+           for (int j = 1; j < jTable1.getColumnCount(); j++){
+               if(jTable1.getModel().getValueAt(i, j) == "1"){
+                   g.getArestas().add(new Aresta("aresta"+ i+j, g.getVertice().get(i), g.getVertice().get(j)));
+               }
+           }
+        }
+                
+        
         /* XStream xstream = new XStream(new DomDriver());
         xstream.processAnnotations(Grafo.class);
 
@@ -260,6 +276,7 @@ public class TelaCriarGrafo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCarregaXml;
     private javax.swing.JLabel jLabelNumeroDeVertices;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
